@@ -1,19 +1,17 @@
+# # This Ansible playbook deploys ingress-nginx on a Kubernetes cluster using Helm.
+# # ingress-nginx is a Kubernetes Ingress Controller that manages external access to services in a
+---
+- name: Add ingress-nginx Helm repository
+  kubernetes.core.helm_repository:
+    name: ingress-nginx
+    repo_url: https://kubernetes.github.io/ingress-nginx
 - name: Deploy ingress-nginx
-  hosts: localhost
-  collections:
-    - kubernetes.core
-  tasks:
-    - name: Add ingress-nginx Helm repository
-      kubernetes.core.helm_repository:
-        name: ingress-nginx
-        repo_url: https://kubernetes.github.io/ingress-nginx
-    - name: Deploy ingress-nginx
-      kubernetes.core.helm:
-        name: ingress-nginx
-        chart_ref: ingress-nginx/ingress-nginx
-        release_namespace: ingress-nginx
-        create_namespace: true
-        values:
-          controller:
-            service:
-              type: LoadBalancer
+  kubernetes.core.helm:
+    name: ingress-nginx
+    chart_ref: ingress-nginx/ingress-nginx
+    release_namespace: ingress-nginx
+    create_namespace: true
+    values:
+      controller:
+        service:
+          type: LoadBalancer

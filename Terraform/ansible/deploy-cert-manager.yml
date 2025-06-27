@@ -1,17 +1,15 @@
+# # This Ansible playbook deploys cert-manager on a Kubernetes cluster using Helm.
+# # cert-manager is a Kubernetes add-on to automate the management and issuance of TLS certificates.
+---
+- name: Add Jetstack Helm repository
+  kubernetes.core.helm_repository:
+    name: jetstack
+    repo_url: https://charts.jetstack.io
 - name: Deploy cert-manager
-  hosts: localhost
-  collections:
-    - kubernetes.core
-  tasks:
-    - name: Add Jetstack Helm repository
-      kubernetes.core.helm_repository:
-        name: jetstack
-        repo_url: https://charts.jetstack.io
-    - name: Deploy cert-manager
-      kubernetes.core.helm:
-        name: cert-manager
-        chart_ref: jetstack/cert-manager
-        release_namespace: cert-manager
-        create_namespace: true
-        values:
-          installCRDs: true
+  kubernetes.core.helm:
+    name: cert-manager
+    chart_ref: jetstack/cert-manager
+    release_namespace: cert-manager
+    create_namespace: true
+    values:
+      installCRDs: true

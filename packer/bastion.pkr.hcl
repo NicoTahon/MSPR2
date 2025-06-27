@@ -25,9 +25,7 @@
 // - Ne pas intégrer de secrets dans le fichier ou l'image.
 // - Lancer cette image dans un VPC sécurisé avec accès restreint (bastion).
 //
-// Auteur : [Ton Nom]
 // Projet : MSPR TPRE912 – Infrastructure virtualisée avec EKS
-// Date : [Date de création]
 // ============================================================
 
 packer {
@@ -78,7 +76,7 @@ build {
       # Ansible
       "sudo add-apt-repository --yes --update ppa:ansible/ansible",
       "sudo apt-get install -y ansible",
-      "sudo apt install -y python3-pip"
+      "sudo apt install -y python3-pip",
       # Nettoyage
       "rm -rf awscliv2.zip aws",
       "sudo apt-get clean"

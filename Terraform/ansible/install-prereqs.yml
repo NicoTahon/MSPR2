@@ -1,0 +1,10 @@
+# # This Ansible playbook installs Python prerequisites for managing Kubernetes and OpenShift clusters.
+# # It ensures that the necessary Python packages are installed using pip3.
+---
+- name: Install Python prerequisites
+  pip:
+    name:
+      - openshift
+      - pyyaml
+      - kubernetes
+    executable: pip3

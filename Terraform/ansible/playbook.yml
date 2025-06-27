@@ -1,11 +1,15 @@
 # playbook.yml
+# This Ansible playbook deploys Odoo on an EKS cluster with ingress and cert-manager.
+# It includes tasks to deploy prerequisites, ingress-nginx, cert-manager, and Odoo itself
+---
 - name: Deploy Odoo on EKS cluster with ingress and cert-manager
   hosts: localhost
   gather_facts: false
+  collections:
+    - kubernetes.core
   tasks:
-
-    - name: Deploy prerequisites
-      import_tasks: requirements.yml
+    - name: Install Python prerequisites
+      import_tasks: install-prereqs.yml
 
     - name: Deploy ingress-nginx
       import_tasks: deploy-ingress-nginx.yml
@@ -18,25 +22,29 @@
         api_version: v1
         kind: Service
         namespace: ingress-nginx
-        name: ingress-nginx
+        name: ingress-nginx-controller
       register: ingress_service_info
       until: ingress_service_info.resources[0].status.loadBalancer.ingress is defined
-      retries: 10
+      retries: 20
       delay: 10
 
     - name: Extract LoadBalancer hostname
       set_fact:
         lb_hostname: "{{ ingress_service_info.resources[0].status.loadBalancer.ingress[0].hostname }}"
 
+    - name: Save LoadBalancer hostname to file
+      ansible.builtin.copy:
+        content: "{{ lb_hostname }}"
+        dest: /home/ubuntu/provisioner_files/loadbalancer_hostname.txt
+        mode: '0644'
+
     - name: Deploy cert-manager
       import_tasks: deploy-cert-manager.yml
 
     - name: Apply ClusterIssuer
-      kubernetes.core.k8s:
-        state: present
-        src: cluster-issuer.yml
+      import_tasks: apply-issuer.yml
 
-    - name: Déployer Odoo sur le cluster
+    - name: Deploy Odoo
       import_tasks: deploy-odoo.yml
       vars:
         ingress_hostname: "{{ lb_hostname }}"

@@ -71,8 +71,11 @@ resource "aws_instance" "bastion" {
   provisioner "remote-exec" {
     inline = [
       "tar -xvf playbooks.tar", # Décompresser l'archive
+      "ansible-playbook playbook.yml", # Exécuter le playbook
     ]
   }
+
+
   connection {
     type        = "ssh"
     host        = self.public_ip

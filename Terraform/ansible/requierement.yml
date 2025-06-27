@@ -1,11 +1,7 @@
-- name: Test Kubernetes connectivity
-  hosts: localhost
-  collections:
-    - kubernetes.core
-  tasks:
-    - name: install pre-requisites
-      pip:
-        name:
-          - openshift
-          - pyyaml
-          - kubernetes
+#  This file defines the requirements for the Ansible playbook to deploy Odoo on Kubernetes.
+#  It specifies the necessary Ansible collections to be installed for managing Kubernetes resources.
+---
+collections:
+  - name: kubernetes.core
+    version: ">=2.2.0"
+  - name: ansible.posix

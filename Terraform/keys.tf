@@ -4,7 +4,8 @@ resource "tls_private_key" "key" {
   rsa_bits  = 4096
 }
 
-# Create key pair
+# Create key pair in AWS to connect to the EC2 instance
+# This key pair will be used to connect to the Bastion host and EKS worker nodes
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key3"
   public_key = tls_private_key.key.public_key_openssh

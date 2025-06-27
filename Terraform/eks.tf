@@ -7,6 +7,8 @@ resource "random_string" "suffix" {
   special = false
 }
 
+# This module creates an EKS cluster with two managed node groups.
+# The nodes groups use the instance type specified in the variable `instance_type_eks`,
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
   version = "20.8.5"
@@ -18,6 +20,7 @@ module "eks" {
   enable_cluster_creator_admin_permissions = true
   cluster_endpoint_private_access          = true
   cluster_endpoint_public_access_cidrs     = ["0.0.0.0/0"]
+  # This links the SG created by the module to the EKS cluster
   cluster_additional_security_group_ids = [
     aws_security_group.eks.id
   ]
@@ -32,6 +35,8 @@ module "eks" {
 
   }
 
+  # This creates the worker nodes in the EKS cluster.
+  # The nodes groups use the instance type specified in the variable `instance_type_eks`,
   eks_managed_node_groups = {
     one = {
       name = "node-group-1"
