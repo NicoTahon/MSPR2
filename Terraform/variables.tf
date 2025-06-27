@@ -16,7 +16,7 @@ variable "instance_type_eks" {
 variable "aws_ami" {
   description = "AMI to use for the EC2 instance"
   type        = string
-  default     = "ami-04eef618c78863dfd" # Ubuntu 20.04 LTS in us-east-1
+  default     = "ami-0046be61906c89795" # Ubuntu 20.04 LTS in us-east-1
 }
 
 # Region to deploy resources
@@ -40,12 +40,12 @@ variable "AWS_ACCESS_KEY_ID" {
   description = "AWS Access Key ID"
   type        = string
   sensitive   = true
-  default = "AKIAZQ3DSYLYDPJNUNUY"
+  default = "AKIA2UC3CQHJGLRL73OX"
 }
 
 variable "AWS_SECRET_ACCESS_KEY" {
   description = "AWS Secret Access Key"
   type        = string
   sensitive   = true
-  default = "BsuVQd2VReMdO4HiCHltu/iqHO0xCFjvFLFt9L9f"
+  default = "h271aL0tFzJmW8pxR9oqVl/NL2x/N4u1h/tG4285"
 }

@@ -12,8 +12,8 @@
     release_namespace: odoo
     create_namespace: true
     values:
-      odooUsername: admin
-      odooPassword: adminpassword
+      odooUsername: admin # Vault in prod
+      odooPassword: adminpassword # Vault in prod
       odooEmail: admin@example.com
       persistence:
         storageClass: gp2

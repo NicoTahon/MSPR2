@@ -35,7 +35,7 @@
     - name: Save LoadBalancer hostname to file
       ansible.builtin.copy:
         content: "{{ lb_hostname }}"
-        dest: /home/ubuntu/provisioner_files/loadbalancer_hostname.txt
+        dest: /home/ubuntu/loadbalancer_hostname.txt
         mode: '0644'
 
     - name: Deploy cert-manager

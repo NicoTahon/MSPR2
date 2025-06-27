@@ -32,7 +32,7 @@ resource "aws_security_group" "eks" {
 
 
   ingress {
-    description = "World"
+    description = "Allow EKS cluster communication within the private VPC"
     from_port   = 443
     to_port     = 443
     protocol    = "tcp"
