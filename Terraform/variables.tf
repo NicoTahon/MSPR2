@@ -28,7 +28,6 @@ variable "MY_PUBLIC_IP" {
   description = "Your public IP address to allow SSH access"
   type        = string
   sensitive   = true
-  default     = "88.174.55.227/32"
 
 }
 
@@ -36,12 +35,10 @@ variable "AWS_ACCESS_KEY_ID" {
   description = "AWS Access Key ID"
   type        = string
   sensitive   = true
-  default     = "AKIA5FTZCYRNABL4S3YD"
 }
 
 variable "AWS_SECRET_ACCESS_KEY" {
   description = "AWS Secret Access Key"
   type        = string
   sensitive   = true
-  default     = "qn9e6PdrnWWbp4cQnGDJUvn7QgcKd8qOBMOYlwxk"
 }
