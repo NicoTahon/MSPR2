@@ -1,3 +1,4 @@
+# # keys.tf
 # Generate SSH key
 resource "tls_private_key" "key" {
   algorithm = "RSA"

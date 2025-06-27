@@ -1,3 +1,6 @@
+# vpc.tf
+# This file contains the VPC configuration for the EKS cluster & bastion.
+# It uses the terraform-aws-modules/vpc/aws module to create a VPC with public and private subnets.
 module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.8.1"

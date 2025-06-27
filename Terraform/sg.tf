@@ -1,3 +1,4 @@
+#sg.tf
 # This file contains the security group configuration for the Bastion host and its rules.
 resource "aws_security_group" "bastion_sg" {
   name        = "allow_ssh"
@@ -25,6 +26,7 @@ resource "aws_security_group" "bastion_sg" {
   }
 }
 
+# This security group is used for the EKS cluster to allow communication between the bastion and the control plane.
 resource "aws_security_group" "eks" {
   name        = "eks cluster sg"
   description = "Allow traffic"

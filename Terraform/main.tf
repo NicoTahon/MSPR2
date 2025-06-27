@@ -1,4 +1,6 @@
 
+# main.tf
+# This file defines the main Terraform configuration for deploying an EKS cluster
 terraform {
 
 #Defines the required providers and their versions
