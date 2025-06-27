@@ -1,0 +1,11 @@
+- name: Test Kubernetes connectivity
+  hosts: localhost
+  collections:
+    - kubernetes.core
+  tasks:
+    - name: install pre-requisites
+      pip:
+        name:
+          - openshift
+          - pyyaml
+          - kubernetes

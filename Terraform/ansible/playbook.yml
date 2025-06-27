@@ -1,0 +1,42 @@
+# playbook.yml
+- name: Deploy Odoo on EKS cluster with ingress and cert-manager
+  hosts: localhost
+  gather_facts: false
+  tasks:
+
+    - name: Deploy prerequisites
+      import_tasks: requirements.yml
+
+    - name: Deploy ingress-nginx
+      import_tasks: deploy-ingress-nginx.yml
+
+    - name: Install AWS EBS CSI Driver
+      import_tasks: install-ebs-csi.yml
+
+    - name: Wait for LoadBalancer IP to be available
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Service
+        namespace: ingress-nginx
+        name: ingress-nginx
+      register: ingress_service_info
+      until: ingress_service_info.resources[0].status.loadBalancer.ingress is defined
+      retries: 10
+      delay: 10
+
+    - name: Extract LoadBalancer hostname
+      set_fact:
+        lb_hostname: "{{ ingress_service_info.resources[0].status.loadBalancer.ingress[0].hostname }}"
+
+    - name: Deploy cert-manager
+      import_tasks: deploy-cert-manager.yml
+
+    - name: Apply ClusterIssuer
+      kubernetes.core.k8s:
+        state: present
+        src: cluster-issuer.yml
+
+    - name: Déployer Odoo sur le cluster
+      import_tasks: deploy-odoo.yml
+      vars:
+        ingress_hostname: "{{ lb_hostname }}"

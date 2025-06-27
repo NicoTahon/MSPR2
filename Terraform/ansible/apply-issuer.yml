@@ -1,0 +1,8 @@
+- name: Apply cert-manager ClusterIssuer
+  hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Apply ClusterIssuer
+      kubernetes.core.k8s:
+        state: present
+        src: cluster-issuer.yml

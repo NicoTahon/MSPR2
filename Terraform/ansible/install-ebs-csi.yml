@@ -1,0 +1,17 @@
+# This Ansible playbook installs the AWS EBS CSI Driver to provide persistent storage for Kubernetes clusters running on AWS EKS. 
+# The EBS CSI Driver allows Kubernetes to manage AWS Elastic Block Store (EBS) volumes as persistent storage.
+- name: Install AWS EBS CSI Driver
+  hosts: localhost
+  collections:
+    - kubernetes.core
+  tasks:
+    - name: Add AWS EBS CSI Helm repository
+      kubernetes.core.helm_repository:
+        name: aws-ebs-csi-driver
+        repo_url: https://kubernetes-sigs.github.io/aws-ebs-csi-driver
+    - name: Deploy AWS EBS CSI Driver
+      kubernetes.core.helm:
+        name: aws-ebs-csi-driver
+        chart_ref: aws-ebs-csi-driver/aws-ebs-csi-driver
+        release_namespace: kube-system
+        create_namespace: true

@@ -1,0 +1,48 @@
+- name: Deploy Odoo
+  hosts: localhost
+  collections:
+    - kubernetes.core
+  tasks:
+    - name: Add Bitnami Helm repository
+      kubernetes.core.helm_repository:
+        name: bitnami
+        repo_url: https://charts.bitnami.com/bitnami
+    - name: Deploy Odoo
+      kubernetes.core.helm:
+        name: odoo
+        chart_ref: bitnami/odoo
+        release_namespace: odoo
+        create_namespace: true
+        values:
+          odooUsername: admin
+          odooPassword: adminpassword
+          odooEmail: admin@example.com
+          persistence:
+            storageClass: gp2
+            size: 10Gi
+          postgresql:
+            persistence:
+              storageClass: gp2
+              size: 10Gi
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1024Mi"
+          postgresql:
+            primary:
+              resources:
+                requests:
+                  cpu: "250m"
+                  memory: "256Mi"
+                limits:
+                  cpu: "500m"
+                  memory: "512Mi"
+          ingress:
+            enabled: true
+            hostname: "{{ ingress_hostname }}"
+            ingressClassName: nginx
+            annotations:
+              kubernetes.io/ingress.class: nginx
