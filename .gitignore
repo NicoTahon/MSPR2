@@ -4,3 +4,4 @@
 terraform.tfstate
 kubeconfig
 .env
+terraform.tfstate.backup
