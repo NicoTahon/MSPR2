@@ -26,7 +26,7 @@ L'ensemble du projet s'appuie sur des outils d'infrastructure as code (Terraform
 
 ## Workflow terraform
 
-![Workflow terraform](img/Ansible_workflow.png)
+![Workflow terraform](img/Packer_and_terraform_workflow.png)
 
 ## Workflow Ansible
 
